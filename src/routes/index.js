@@ -28,5 +28,5 @@ export default (app) => {
   app.post('/api/v2/:userId/books', middleware.Verify, historyController.Borrow)
   app.get('/api/v2/users/:userId/books', middleware.Verify, historyController.YetToReturn)
   app.get('/api/v2/users/:userId/books/history', middleware.Verify, historyController.ViewHistory)
+  app.put('/api/v2/users/:userId/books', middleware.Verify, historyController.Return)
 }
-

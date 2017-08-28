@@ -29,4 +29,5 @@ export default (app) => {
   app.get('/api/v2/users/:userId/books', middleware.Verify, historyController.YetToReturn)
   app.get('/api/v2/users/:userId/books/history', middleware.Verify, historyController.ViewHistory)
   app.put('/api/v2/users/:userId/books', middleware.Verify, historyController.Return)
+  app.get('/api/v2/users/:userId/health', middleware.Verify, userController.Health)
 }

@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 const users = db.users
+const health = db.health
 
 const userController = {
   Register (req, res) {
@@ -65,13 +66,13 @@ const userController = {
             email: req.body.email
           }
         }).then(found => {
-          console.log(found)
+          // console.log(found)
           if (!found) {
             res.status(400).send({
               message: 'User does NOT exist!'
             })
           } else if (bcrypt.compareSync(req.body.password, found.password)) {
-            console.log(found.role)
+            // console.log(found.role)
             const token = jwt.sign({role: found.role}, process.env.SECRET_KEY, {
               expiresIn: 60 * 60 * 24 // Token expires in 24 hours
             })
@@ -103,7 +104,39 @@ const userController = {
   },
 
   Health (req, res) {
-  //
+    return health
+      .findOne({
+        where: {
+          userId: req.params.userId
+        }
+      }).then(found => {
+        if (found) {
+          const beforeDue = found.before_due
+          const afterDue = found.after_due
+          const total = beforeDue + afterDue
+          const healthPercent = (beforeDue / total) * 100
+
+          if (healthPercent >= 80) {
+            var color = 'green'
+          } else if (healthPercent >= 60) {
+            color = 'greenyellow'
+          } else if (healthPercent >= 40) {
+            color = 'yellow'
+          } else if (healthPercent >= 20) {
+            color = 'red'
+          } else {
+            color = 'black'
+          }
+          res.status(200).send({
+            message: 'Health is : ' + healthPercent + '%',
+            color: color
+          })
+        } else {
+          res.status(404).send({
+            message: 'User Not Found!'
+          })
+        }
+      })
   }
 
 }

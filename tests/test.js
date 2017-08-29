@@ -11,8 +11,8 @@ chai.use(chaiHttp)
 
 describe('Users', () => {
   Users = {
-    username: 'proxie1',
-    email: 'proxie1@x.com',
+    username: 'proxie2',
+    email: 'proxie2@x.com',
     password: '1111',
     cpassword: '1111'
 
@@ -39,9 +39,9 @@ describe('Users', () => {
         res.body.should.have.property('password')
         res.body.should.have.property('role')
         res.body.should.have.property('borrowed')
-        res.body.username.should.equal('proxie')
+        res.body.username.should.equal('proxie2')
         // res.body.password.should.equal('moyo');
-        res.body.email.should.equal('proxie@x.com')
+        res.body.email.should.equal('proxie2@x.com')
         res.body.role.should.equal('User')
         res.body.borrowed.should.equal(0)
         done()
@@ -63,7 +63,7 @@ describe('Users', () => {
 
   it('should let users sign in /signin POST', (done) => {
     Users = {
-      email: 'proxie@x.com',
+      email: 'proxie2@x.com',
       password: '1111'
     }
     chai.request(app)

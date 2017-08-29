@@ -19,7 +19,7 @@ describe('Users', () => {
   }
 
   /*
-
+  // [ User ]
   - register user
     - test if user exist
   - login

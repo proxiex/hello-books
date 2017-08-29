@@ -1,6 +1,8 @@
-language: node_js
+language : node_js
 node_js:
-  - "6"
+  - node_js
+services:
+- postgresql
 env:
   global:
     - export NODE_ENV=test

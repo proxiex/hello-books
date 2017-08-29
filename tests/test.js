@@ -26,7 +26,7 @@ describe('Users', () => {
   - 
 
   */
-  /*  it('should let users sign up /signup POST', (done) => {
+   it('should let users sign up /signup POST', (done) => {
     chai.request(app)
       .post('/api/v2/users/signup')
       .send(Users)
@@ -46,7 +46,7 @@ describe('Users', () => {
         res.body.borrowed.should.equal(0)
         done()
       })
-    }) */
+    })
 
   it('should not let user sign up with the same email twice', (done) => {
     chai.request(app)

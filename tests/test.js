@@ -11,8 +11,8 @@ chai.use(chaiHttp)
 
 describe('Users', () => {
   Users = {
-    username: 'proxie',
-    email: 'proxie@x.com',
+    username: 'proxie1',
+    email: 'proxie1@x.com',
     password: '1111',
     cpassword: '1111'
 

@@ -136,28 +136,34 @@ const historyController = {
 
   ViewHistory (req, res) {
     return history
-      .findAll({
+      .find({
+        where: {
+          userId: req.params.userId
+        },
+
         include: [
           {
             model: user,
             where: {
               id: req.params.userId
-            }
+            },
+            as: 'userDetails'
           },
           {
             model: book,
             where: {
               id: req.body.bookId
-            }
+            },
+            as: 'bookInfo'
           }
         ]
-      }).then(history => {
-        if (history) {
-          res.status(200).send(history)
-        } else {
+      }).then((history) => {
+        if (!history) {
           res.status(404).send({
-            message: 'You have no history'
+            message: 'You have no History!'
           })
+        } else {
+          res.status(200).send(history)
         }
       })
       // .catch(error => console.log(error), res.status(400).send({message: 'An error occured!'}))

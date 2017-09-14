@@ -3,11 +3,19 @@ module.exports = (sequelize, DataTypes) => {
   const history = sequelize.define('history', {
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     bookId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'books',
+        key: 'id'
+      }
     },
     date_collected: {
       type: DataTypes.DATE,
@@ -30,11 +38,13 @@ module.exports = (sequelize, DataTypes) => {
   })
   history.associate = (models) => {
     history.belongsTo(models.book, {
-      foreignKey: 'bookId'
+      foreignKey: 'bookId',
+      as: 'bookInfo'
     })
 
     history.belongsTo(models.users, {
-      foreignKey: 'userId'
+      foreignKey: 'userId',
+      as: 'userDetails'
     })
   }
   return history

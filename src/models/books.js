@@ -30,9 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   })
+
   book.associate = (models) => {
-    book.hasMany(models.history, {
-      foreignKey: 'bookId',
+    book.belongsToMany(models.users, {
+      through: models.history,
+      foreignKey: {
+        name: 'userId'
+      },
       as: 'bookInfo'
     })
   }

@@ -35,10 +35,20 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   users.associate = (models) => {
+    users.belongsToMany(models.book, {
+      through: models.history,
+      foreignKey: {
+        name: 'userId'
+      },
+      as: 'userDetails'
+    })
+  }
+
+  /*  users.associate = (models) => {
     users.hasMany(models.history, {
       foereignKey: 'userId'
      
     })
-  }
+  } */
   return users
 }

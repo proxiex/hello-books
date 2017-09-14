@@ -2,7 +2,7 @@ import chai from 'chai'
 import chaiHttp from 'chai-http'
 import db from '../src/models'
 import app from '../src/app'
-import faker from 'faker';
+import faker from 'faker'
 
 const should = chai.should()
 const Users = db.Users
@@ -12,7 +12,7 @@ const History = db.History
 chai.use(chaiHttp)
 
 describe('Users', () => {
-  Users = {
+  const Users = {
     username: faker.name.findName(),
     email: faker.internet.email(),
     password: '1111',
@@ -34,9 +34,8 @@ describe('Users', () => {
       - delete book
       - update book
 
-
   */
-   it('should let users sign up /signup POST', (done) => {
+  it('should let users sign up /signup POST', (done) => {
     chai.request(app)
       .post('/api/v2/users/signup')
       .send(Users)
@@ -44,7 +43,7 @@ describe('Users', () => {
         res.should.have.status(201)
         done()
       })
-    })
+  })
 
   it('should not let user sign up with the same email twice', (done) => {
     chai.request(app)
@@ -60,13 +59,13 @@ describe('Users', () => {
   })
 
   it('should let users sign in /signin POST', (done) => {
-    Users = {
-      email: 'proxie@x.com',
+    const User = {
+      email: Users.email,
       password: '1111'
     }
     chai.request(app)
       .post('/api/v2/users/signin')
-      .send(Users)
+      .send(User)
       .end((err, res) => {
         res.should.have.status(200)
         res.should.be.json

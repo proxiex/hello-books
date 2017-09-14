@@ -9,6 +9,8 @@ const cur = new Date()
 const returnDate = cur.setDate(cur.getDate() + 7) // get 24 days after borrowed date 
 const x = new Date()
 const graceP = x.setDate(x.getDate() + 2) // set grace preriod to two days
+history.belongsTo(book)
+book.hasMany(history)
 
 const historyController = {
 
@@ -135,9 +137,20 @@ const historyController = {
   ViewHistory (req, res) {
     return history
       .findAll({
-        where: {
-          userId: req.params.userId
-        }
+        include: [
+          {
+            model: user,
+            where: {
+              id: req.params.userId
+            }
+          },
+          {
+            model: book,
+            where: {
+              id: req.body.bookId
+            }
+          }
+        ]
       }).then(history => {
         if (history) {
           res.status(200).send(history)

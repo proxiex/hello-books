@@ -27,17 +27,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        history.belongsTo(models.book, {
-          foreignKey: 'bookId'
-        })
-        history.belongsTo(models.users, {
-          foreignKey: 'userId'
-        })
-      }
-    }
   })
+  history.associate = (models) => {
+    history.belongsTo(models.book, {
+      foreignKey: 'bookId'
+    })
+
+    history.belongsTo(models.users, {
+      foreignKey: 'userId'
+    })
+  }
   return history
 }

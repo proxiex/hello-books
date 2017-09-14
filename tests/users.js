@@ -1,18 +1,20 @@
 import chai from 'chai'
 import chaiHttp from 'chai-http'
-import models from '../src/models'
+import db from '../src/models'
 import app from '../src/app'
+import faker from 'faker';
 
 const should = chai.should()
-let Users = models.Users
-let Books = models.Books
+const Users = db.Users
+const Books = db.Books
+const History = db.History
 
 chai.use(chaiHttp)
 
 describe('Users', () => {
   Users = {
-    username: 'proxie2',
-    email: 'proxie2@x.com',
+    username: faker.name.findName(),
+    email: faker.internet.email(),
     password: '1111',
     cpassword: '1111'
 
@@ -23,7 +25,15 @@ describe('Users', () => {
   - register user
     - test if user exist
   - login
-  - 
+    - view books
+    - borrow book
+    - return book 
+    - view yet to return 
+    * Admin only
+      - add book
+      - delete book
+      - update book
+
 
   */
    it('should let users sign up /signup POST', (done) => {
@@ -32,18 +42,6 @@ describe('Users', () => {
       .send(Users)
       .end((err, res) => {
         res.should.have.status(201)
-        res.should.be.json
-        res.body.should.be.a('object')
-        res.body.should.have.property('username')
-        res.body.should.have.property('email')
-        res.body.should.have.property('password')
-        res.body.should.have.property('role')
-        res.body.should.have.property('borrowed')
-        res.body.username.should.equal('proxie2')
-        // res.body.password.should.equal('moyo');
-        res.body.email.should.equal('proxie2@x.com')
-        res.body.role.should.equal('User')
-        res.body.borrowed.should.equal(0)
         done()
       })
     })
@@ -63,14 +61,13 @@ describe('Users', () => {
 
   it('should let users sign in /signin POST', (done) => {
     Users = {
-      email: 'proxie2@x.com',
+      email: 'proxie@x.com',
       password: '1111'
     }
     chai.request(app)
       .post('/api/v2/users/signin')
       .send(Users)
       .end((err, res) => {
-        console.log(res)
         res.should.have.status(200)
         res.should.be.json
         res.body.should.be.a('object')

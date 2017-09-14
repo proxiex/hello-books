@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "build": "rimraf dist/ && babel ./src --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "start": "npm run build && node dist/bin/server.js",
+    "serve": "npm run build && node dist/bin/server.js",
+    "start": "nodemon --watch src --exec babel-node -- src/bin/server.js",
     "start:dev": "npm run build && nodemon dist/bin/server.js",
     "test": "mocha ./tests/* --compilers js:babel-register"
   },
@@ -22,6 +23,7 @@
     "dotenv": "^4.0.0",
     "eslint": "^4.5.0",
     "express": "~4.0.0",
+    "faker": "^4.1.0",
     "jsonwebtoken": "^7.4.2",
     "morgan": "^1.8.2",
     "pg": "^7.1.2",

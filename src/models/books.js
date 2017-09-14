@@ -29,14 +29,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        book.hasMany(models.borrow, {
-          foreignKey: 'bookId'
-        })
-      }
-    }
   })
+  book.associate = (models) => {
+    book.hasMany(models.history, {
+      foreignKey: 'bookId',
+      as: 'bookInfo'
+    })
+  }
   return book
 }

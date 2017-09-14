@@ -32,14 +32,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        users.hasMany(models.borrow, {
-          foereignKey: 'userId'
-        })
-      }
-    }
   })
+
+  users.associate = (models) => {
+    users.hasMany(models.history, {
+      foereignKey: 'userId'
+     
+    })
+  }
   return users
 }
